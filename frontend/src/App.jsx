@@ -32,7 +32,7 @@ export default function App() {
             form.append("format", format);
             form.append("quality", String(parseInt(quality, 10)));
 
-            const res = await fetch("http://localhost:3000/convert", {
+            const res = await fetch("/convert", {
                 method: "POST",
                 body: form,
             });
@@ -130,7 +130,7 @@ export default function App() {
                                     </div>
 
                                     <div className="flex items-center gap-2 w-full min-w-0 overflow-hidden">
-                                        <span className="text-sm flex-shrink-0">Quality</span>
+                                        <span className="text-sm shrink-0">Quality</span>
                                         <input
                                             className="w-full max-w-full appearance-none h-3"
                                             type="range"
