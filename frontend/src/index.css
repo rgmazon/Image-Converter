@@ -1,1 +1,58 @@
 @import "tailwindcss";
+
+/* Custom range (slider) styling */
+input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	background: transparent;
+}
+
+input[type="range"]:focus {
+	outline: none;
+}
+
+/* WebKit track */
+input[type="range"]::-webkit-slider-runnable-track {
+	height: 8px;
+	background: #eef2ff; /* indigo-100 */
+	border-radius: 9999px;
+}
+
+/* WebKit thumb */
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 18px;
+	height: 18px;
+	background: #6366f1; /* indigo-500 */
+	border-radius: 50%;
+	box-shadow: 0 0 0 6px rgba(99,102,241,0.12);
+	margin-top: -5px; /* center thumb on track */
+}
+
+/* Firefox track & thumb */
+input[type="range"]::-moz-range-track {
+	height: 8px;
+	background: #eef2ff;
+	border-radius: 9999px;
+}
+
+input[type="range"]::-moz-range-thumb {
+	width: 18px;
+	height: 18px;
+	background: #6366f1;
+	border-radius: 50%;
+	border: none;
+	box-shadow: 0 0 0 6px rgba(99,102,241,0.12);
+}
+
+/* Use newer accent-color where supported */
+input[type="range"] {
+	accent-color: #6366f1;
+}
+
+/* Make thumb slightly larger on larger screens */
+@media (min-width: 640px) {
+	input[type="range"]::-webkit-slider-thumb { width: 20px; height: 20px; margin-top: -6px; }
+	input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; }
+}

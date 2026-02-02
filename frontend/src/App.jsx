@@ -61,12 +61,12 @@ export default function App() {
         <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex justify-center p-6">
             <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-5xl space-y-6">
 
-                <header className="flex items-center justify-between">
+                <header className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
                     <div>
-                        <h1 className="text-2xl font-semibold">Image Converter</h1>
+                        <h1 className="text-2xl font-semibold leading-tight">Image Converter</h1>
                         <p className="text-sm text-gray-500">Fast batch image conversion with previews</p>
                     </div>
-                    <div className="text-sm text-gray-600">Ready</div>
+                    <div className="text-sm text-gray-600 sm:text-right text-left">Ready</div>
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -81,16 +81,16 @@ export default function App() {
                                 setDragging(false);
                                 handleFiles(e.dataTransfer.files);
                             }}
-                            className={`border-2 border-dashed rounded-xl p-6 text-center transition select-none
+                            className={`border-2 border-dashed rounded-xl p-6 text-center transition select-none min-h-[160px]
                                 ${dragging ? "border-blue-500 bg-blue-50" : "border-gray-200 bg-white"}`}
                         >
                             <p className="text-gray-700 font-medium">Drag & drop images here</p>
                             <p className="text-sm text-gray-400 mt-1">or</p>
 
-                              <div className="mt-3 flex gap-3 justify-center">
+                            <div className="mt-3 flex flex-col sm:flex-row gap-3 justify-center w-full">
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="px-4 py-2 bg-white border rounded shadow-sm hover:bg-gray-50"
+                                    className="px-4 py-2 bg-white border rounded shadow-sm hover:bg-gray-50 w-full sm:w-auto"
                                 >
                                     Select files
                                 </button>
@@ -98,7 +98,7 @@ export default function App() {
                                 <button
                                     onClick={() => setFiles([])}
                                     disabled={!files.length}
-                                    className="px-4 py-2 bg-red-50 text-red-600 border rounded disabled:opacity-50"
+                                    className="px-4 py-2 bg-red-50 text-red-600 border rounded disabled:opacity-50 w-full sm:w-auto"
                                 >
                                     Clear
                                 </button>
@@ -115,21 +115,24 @@ export default function App() {
                         </div>
 
                         <div className="mt-4 bg-gray-50 border rounded p-4">
-                            <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center gap-3">
-                                    <select
-                                        className="border rounded px-3 py-2"
-                                        value={format}
-                                        onChange={e => setFormat(e.target.value)}
-                                        aria-label="Output format"
-                                    >
-                                        <option value="webp">WebP</option>
-                                        <option value="avif">AVIF</option>
-                                    </select>
+                            <div className="flex items-center justify-between mb-3 flex-wrap gap-3">
+                                <div className="flex flex-col w-full min-w-0 gap-3">
+                                    <div className="w-full">
+                                        <select
+                                            className="border rounded px-3 py-2 w-full sm:min-w-[140px]"
+                                            value={format}
+                                            onChange={e => setFormat(e.target.value)}
+                                            aria-label="Output format"
+                                        >
+                                            <option value="webp">WebP</option>
+                                            <option value="avif">AVIF</option>
+                                        </select>
+                                    </div>
 
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-sm">Quality</span>
+                                    <div className="flex items-center gap-2 w-full min-w-0 overflow-hidden">
+                                        <span className="text-sm flex-shrink-0">Quality</span>
                                         <input
+                                            className="w-full max-w-full appearance-none h-3"
                                             type="range"
                                             min="1"
                                             max="100"
@@ -137,11 +140,11 @@ export default function App() {
                                             onChange={e => setQuality(e.target.value)}
                                             aria-label="Quality"
                                         />
-                                        <span className="text-sm w-8 text-right">{quality}</span>
+                                        <span className="text-sm w-10 text-right flex-shrink-0">{quality}</span>
                                     </div>
                                 </div>
 
-                                <div className="text-sm text-gray-600 whitespace-nowrap text-right">
+                                <div className="text-sm text-gray-600 sm:text-right text-left">
                                     {files.length} files • {(totalSize / 1024 / 1024).toFixed(2)} MB
                                 </div>
                             </div>
@@ -164,21 +167,21 @@ export default function App() {
                                 No images selected — previews will appear here
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 {files.map((file, i) => (
                                     <div key={i} className="relative border rounded-lg overflow-hidden group bg-white">
-                                        <img src={URL.createObjectURL(file)} className="h-40 w-full object-cover" alt={file.name} />
+                                        <img src={URL.createObjectURL(file)} className="h-28 sm:h-40 w-full object-cover" alt={file.name} />
 
                                         <button
                                             onClick={() => removeFile(i)}
                                             aria-label={`Remove ${file.name}`}
-                                            className="absolute top-2 right-2 bg-black/60 text-white rounded-full w-7 h-7 opacity-0 group-hover:opacity-100 transition-flex items-center justify-center flex"
+                                            className="absolute top-2 right-2 bg-black/60 text-white rounded-full w-7 h-7 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center flex"
                                         >
                                             ×
                                         </button>
 
-                                        <div className="p-2 text-xs">
-                                            <div className="truncate font-medium">{file.name}</div>
+                                        <div className="p-2 text-xs max-w-full">
+                                            <div className="truncate font-medium max-w-full">{file.name}</div>
                                             <div className="text-gray-500">{(file.size / 1024).toFixed(1)} KB</div>
                                         </div>
                                     </div>
@@ -190,7 +193,7 @@ export default function App() {
 
                 {/* Toast */}
                 {toast && (
-                    <div className="fixed right-6 bottom-6 bg-black text-white px-4 py-2 rounded shadow-lg">
+                    <div className="fixed sm:right-6 sm:bottom-6 bottom-4 left-4 right-4 sm:left-auto bg-black text-white px-4 py-2 rounded shadow-lg max-w-md mx-auto text-center sm:text-left">
                         {toast}
                     </div>
                 )}
