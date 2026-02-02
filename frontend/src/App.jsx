@@ -32,9 +32,9 @@ export default function App() {
             form.append("format", format);
             form.append("quality", String(parseInt(quality, 10)));
 
-            const res = await fetch("/convert", {
-                method: "POST",
-                body: form,
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/convert`, {
+            method: "POST",
+            body: form,
             });
 
             if (!res.ok) throw new Error(`Server error: ${res.status}`);
@@ -53,7 +53,8 @@ export default function App() {
         } finally {
             setConverting(false);
         }
-    };
+        };
+
 
     const totalSize = files.reduce((a, b) => a + b.size, 0);
 
